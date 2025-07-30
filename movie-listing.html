@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Now Showing</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      background-image: url('assets/project.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      text-align: center;
+      color: #00ffc3;
+      margin-bottom: 40px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    .movie-card {
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      text-align: center;
+      padding-bottom: 15px;
+    }
+
+    .movie-card:hover {
+      transform: scale(1.05);
+    }
+
+    .movie-card img {
+      width: 100%;
+      height: 270px;
+      object-fit: cover;
+      border-bottom: 1px solid #00ffc3;
+    }
+
+    .movie-card h3 {
+      margin: 15px 10px 0;
+      font-size: 18px;
+      color: #00ffc3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Now Showing</h1>
+  <div class="grid" id="movieGrid"></div>
+
+  <script>
+    const movies = [
+      { id: 'Gilli', name: 'Gilli', poster: 'assets/gilli.jpg' },
+      { id: 'Kaithi', name: 'Kaithi', poster: 'assets/kaithi.jpg' },
+      { id: 'KGF Chapter 2', name: 'KGF Chapter 2', poster: 'assets/kgf.jpg' },
+      { id: 'Leo', name: 'Leo', poster: 'assets/leo.jpg' },
+      { id: 'Mahaan', name: 'Mahaan', poster: 'assets/mahaan.jpg' },
+      { id: 'Mersal', name: 'Mersal', poster: 'assets/mersal.jpg' },
+      { id: 'Remo', name: 'Remo', poster: 'assets/remo.jpg' },
+      { id: 'Vada Chennai', name: 'Vada Chennai', poster: 'assets/vada-chennai.jpg' },
+      { id: 'Vikram Vedha', name: 'Vikram Vedha', poster: 'assets/vikram-vedha.jpg' },
+      { id: 'Vikram', name: 'Vikram', poster: 'assets/vikram.jpg' },
+      { id: 'Sachein', name: 'Sachein', poster: 'assets/sachein.jpg' },
+      { id: 'Shajahan', name: 'Shajahan', poster: 'assets/shajahan.jpg' }
+    ];
+
+    const grid = document.getElementById('movieGrid');
+
+    movies.forEach(movie => {
+      const card = document.createElement('div');
+      card.className = 'movie-card';
+      card.innerHTML = `
+        <img src="${movie.poster}" alt="${movie.name}" />
+        <h3>${movie.name}</h3>
+      `;
+      card.onclick = () => {
+        localStorage.setItem('selectedMovie', movie.name);
+        window.location.href = `booking.html`;
+      };
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>

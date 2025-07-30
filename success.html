@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Booking Success</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      background-image: url('assets/booking.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      box-sizing: border-box;
+    }
+
+    .success-container {
+      background: rgba(0, 0, 0, 0.85);
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #00ffc3;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .poster {
+      float: right;
+      width: 200px;
+      border-radius: 10px;
+      margin-left: 20px;
+    }
+
+    .details {
+      overflow: hidden;
+    }
+
+    p {
+      margin: 10px 0;
+    }
+
+    button {
+      padding: 12px 20px;
+      margin-top: 30px;
+      background: #00ffc3;
+      color: #000;
+      border: none;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    button:hover {
+      background-color: #00bfa3;
+    }
+  </style>
+</head>
+<body>
+  <div class="success-container">
+    <h1>Booking Confirmed!</h1>
+    <div class="details" id="bookingInfo"></div>
+    <button onclick="logout()">Logout</button>
+  </div>
+
+  <script>
+    const data = JSON.parse(localStorage.getItem("latestBooking"));
+    const movieData = {
+      "Gilli": "assets/gilli.jpg",
+      "Kaithi": "assets/kaithi.jpg",
+      "KGF Chapter 2": "assets/kgf.jpg",
+      "Leo": "assets/leo.jpg",
+      "Mahaan": "assets/mahaan.jpg",
+      "Mersal": "assets/mersal.jpg",
+      "Remo": "assets/remo.jpg",
+      "Vada Chennai": "assets/vada.jpg",
+      "Vikram Vedha": "assets/vedha.jpg",
+      "Vikram": "assets/vikram.jpg",
+      "Sachein": "assets/sachein.jpg",
+      "Shajahan": "assets/shajahan.jpg"
+    };
+
+    if (data) {
+      document.getElementById("bookingInfo").innerHTML = `
+        <img src="${movieData[data.movie]}" alt="${data.movie}" class="poster" />
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>Movie:</strong> ${data.movie}</p>
+        <p><strong>Theater:</strong> ${data.theater}</p>
+        <p><strong>Timing:</strong> ${data.timing}</p>
+        <p><strong>Seats:</strong> ${data.seats.join(", ")}</p>
+        <p><strong>Location:</strong> ${data.location}</p>
+      `;
+    }
+
+    function logout() {
+      localStorage.clear();
+      sessionStorage.clear();
+      window.location.href = "login.html";
+    }
+  </script>
+</body>
+</html>
