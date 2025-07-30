@@ -10,7 +10,7 @@
       background-color: #000;
       color: #fff;
       font-family: Arial, sans-serif;
-      background-image: url('assets/booking.jpg');
+      background-image: url('assets/popcorn.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -23,12 +23,23 @@
       border-radius: 12px;
       max-width: 700px;
       margin: auto;
+      text-align: center;
     }
 
     h1 {
       color: #00ffc3;
-      text-align: center;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
+    }
+
+    .emoji-banner {
+      font-size: 38px;
+      margin-bottom: 15px;
+    }
+
+    .subtext {
+      font-size: 18px;
+      margin-bottom: 25px;
+      color: #ccc;
     }
 
     .poster {
@@ -39,6 +50,7 @@
     }
 
     .details {
+      text-align: left;
       overflow: hidden;
     }
 
@@ -55,9 +67,6 @@
       font-weight: bold;
       border-radius: 8px;
       cursor: pointer;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
     }
 
     button:hover {
@@ -67,7 +76,10 @@
 </head>
 <body>
   <div class="success-container">
-    <h1>Booking Confirmed!</h1>
+    <div class="emoji-banner">🎟️ ✅ 🍿</div>
+    <h1>Your Booking is Confirmed!</h1>
+    <div class="subtext">Enjoy the show and don’t forget the popcorn! 🎬</div>
+
     <div class="details" id="bookingInfo"></div>
     <button onclick="logout()">Logout</button>
   </div>
@@ -107,6 +119,17 @@
       sessionStorage.clear();
       window.location.href = "login.html";
     }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <script>
+    window.onload = () => {
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 0.6 },
+      });
+    };
   </script>
 </body>
 </html>
