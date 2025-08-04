@@ -1,26 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
   <title>Now Showing</title>
   <style>
     body {
       margin: 0;
       padding: 20px;
       background-color: #000;
+      font-family: 'Segoe UI', sans-serif;
       color: #fff;
-      font-family: Arial, sans-serif;
       background-image: url('assets/dark-black.jpg');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
-      box-sizing: border-box;
     }
 
     h1 {
       text-align: center;
-      color: #00ffc3;
-      margin-bottom: 40px;
+      color: #e50914;
+      margin-bottom: 20px;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    input[type="text"],
+    select {
+      padding: 10px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #111;
+      color: #fff;
+      outline: none;
+      border: 1px solid #333;
+    }
+
+    input::placeholder {
+      color: #999;
     }
 
     .grid {
@@ -49,51 +73,117 @@
       width: 100%;
       height: 270px;
       object-fit: cover;
-      border-bottom: 1px solid #00ffc3;
+      border-bottom: 2px solid #e50914;
+      transition: transform 0.3s ease;
     }
 
     .movie-card h3 {
       margin: 15px 10px 0;
       font-size: 18px;
-      color: #00ffc3;
+      color: #e50914;
+    }
+
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 10px;
+      }
+      .movie-card img {
+        height: 220px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .movie-card img {
+        height: 200px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1> Winu Movie Booking </h1>
+  <h1>Winu Movie Booking</h1>
+
+  <div class="controls">
+    <input type="text" id="searchInput" placeholder="Search by movie name..." />
+    <select id="genreFilter">
+      <option value="All">All Genres</option>
+      <option value="Action">Action</option>
+      <option value="Romantic">Romantic</option>
+      <option value="Drama">Drama</option>
+      <option value="Thriller">Thriller</option>
+      <option value="Comedy">Comedy</option>
+    </select>
+  </div>
+
   <div class="grid" id="movieGrid"></div>
 
   <script>
     const movies = [
-      { id: 'Gilli', name: 'Gilli', poster: 'assets/gilli.jpg' },
-      { id: 'Sachein', name: 'Sachein', poster: 'assets/sachein.jpg' },
-      { id: 'Shajahan', name: 'Shajahan', poster: 'assets/shajahan.jpg' },
-      { id: 'Kaithi', name: 'Kaithi', poster: 'assets/kaithi.jpg' },
-      { id: 'KGF Chapter 2', name: 'KGF Chapter 2', poster: 'assets/kgf.jpg' },
-      { id: 'Leo', name: 'Leo', poster: 'assets/leo.jpg' },
-      { id: 'Mahaan', name: 'Mahaan', poster: 'assets/mahaan.jpg' },
-      { id: 'Mersal', name: 'Mersal', poster: 'assets/mersal.jpg' },
-      { id: 'Remo', name: 'Remo', poster: 'assets/remo.jpg' },
-      { id: 'Vada Chennai', name: 'Vada Chennai', poster: 'assets/vada-chennai.jpg' },
-      { id: 'Vikram Vedha', name: 'Vikram Vedha', poster: 'assets/vikram-vedha.jpg' },
-      { id: 'Vikram', name: 'Vikram', poster: 'assets/vikram.jpg' },
+      { id: 'Gilli', name: 'Gilli', genre: 'Action', poster: 'assets/gilli.jpg' },
+      { id: 'Sachein', name: 'Sachein', genre: 'Romantic', poster: 'assets/sachein.jpg' },
+      { id: 'Shajahan', name: 'Shajahan', genre: 'Drama', poster: 'assets/shajahan.jpg' },
+      { id: 'Kaithi', name: 'Kaithi', genre: 'Thriller', poster: 'assets/kaithi.jpg' },
+      { id: 'KGF Chapter 2', name: 'KGF Chapter 2', genre: 'Action', poster: 'assets/KGF_chapter_2.jpg' },
+      { id: 'Leo', name: 'Leo', genre: 'Action', poster: 'assets/leo.jpg' },
+      { id: 'Mahaan', name: 'Mahaan', genre: 'Drama', poster: 'assets/mahaan.jpg' },
+      { id: 'Mersal', name: 'Mersal', genre: 'Thriller', poster: 'assets/mersal.jpg' },
+      { id: 'Remo', name: 'Remo', genre: 'Comedy', poster: 'assets/remo.jpg' },
+      { id: 'Vada Chennai', name: 'Vada Chennai', genre: 'Drama', poster: 'assets/vada_chennai.jpg' },
+      { id: 'Vikram Vedha', name: 'Vikram Vedha', genre: 'Thriller', poster: 'assets/vikram_vedha.jpg' },
+      { id: 'Vikram', name: 'Vikram', genre: 'Action', poster: 'assets/vikram.jpg' }
     ];
 
     const grid = document.getElementById('movieGrid');
+    const genreFilter = document.getElementById('genreFilter');
+    const searchInput = document.getElementById('searchInput');
 
-    movies.forEach(movie => {
-      const card = document.createElement('div');
-      card.className = 'movie-card';
-      card.innerHTML = `
-        <img src="${movie.poster}" alt="${movie.name}" />
-        <h3>${movie.name}</h3>
-      `;
-      card.onclick = () => {
-        localStorage.setItem('selectedMovie', movie.name);
-        window.location.href = `booking.html`;
-      };
-      grid.appendChild(card);
-    });
+    function displayMovies(filtered) {
+      grid.innerHTML = '';
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<p style="text-align:center; color:#ccc; width:100%;">No movies found.</p>`;
+        return;
+      }
+
+      filtered.forEach(movie => {
+        const card = document.createElement('div');
+        card.className = 'movie-card';
+        card.innerHTML = `
+          <img src="${movie.poster}" alt="${movie.name}" />
+          <h3>${movie.name}</h3>
+        `;
+        card.onclick = () => {
+          localStorage.setItem('selectedMovie', movie.name);
+          window.location.href = `booking.html`;
+        };
+        grid.appendChild(card);
+      });
+    }
+
+    function filterMovies() {
+      const searchText = searchInput.value.toLowerCase();
+      const genre = genreFilter.value;
+
+      let filtered = movies;
+
+      if (genre !== 'All') {
+        filtered = filtered.filter(movie => movie.genre.includes(genre));
+      }
+
+      if (searchText) {
+        filtered = filtered.filter(movie => movie.name.toLowerCase().includes(searchText));
+      }
+
+      displayMovies(filtered);
+    }
+
+    genreFilter.onchange = filterMovies;
+    searchInput.oninput = filterMovies;
+
+    window.onload = () => displayMovies(movies);
   </script>
 </body>
 </html>

@@ -2,67 +2,107 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Booking Success</title>
+  <title>Ticket Confirmation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     body {
       margin: 0;
       padding: 20px;
-      background-color: #000;
-      color: #fff;
-      font-family: Arial, sans-serif;
-      background-image: url('assets/popcorn.jpg');
+      background: url('assets/popcorn.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
       box-sizing: border-box;
     }
 
-    .success-container {
-      background: rgba(0, 0, 0, 0.85);
-      padding: 30px;
-      border-radius: 12px;
-      max-width: 700px;
+    .container {
+      max-width: 750px;
       margin: auto;
+      padding: 30px;
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 12px;
       text-align: center;
     }
 
     h1 {
-      color: #00ffc3;
+      color: #e50914;
+      margin-bottom: 20px;
+    }
+
+    .ticket {
+      display: flex;
+      flex-wrap: wrap;
+      background: #fff;
+      color: #111;
+      border-radius: 20px;
+      border: 2px dashed #e50914;
+      overflow: hidden;
+      position: relative;
+      margin-top: 25px;
+    }
+
+    .ticket::before,
+    .ticket::after {
+      content: "";
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: #000;
+      border-radius: 50%;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .ticket::before {
+      left: -20px;
+    }
+
+    .ticket::after {
+      right: -20px;
+    }
+
+    .poster-side {
+      flex: 1;
+      background: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .poster-side img {
+      width: 100%;
+      max-width: 200px;
+      border-radius: 12px;
+    }
+
+    .details-side {
+      flex: 2;
+      padding: 20px 30px;
+      text-align: left;
+    }
+
+    .details-side .row {
+      display: flex;
       margin-bottom: 10px;
     }
 
-    .emoji-banner {
-      font-size: 38px;
-      margin-bottom: 15px;
+    .label {
+      font-weight: bold;
+      color: #e50914;
+      width: 100px;
     }
 
-    .subtext {
-      font-size: 18px;
-      margin-bottom: 25px;
-      color: #ccc;
-    }
-
-    .poster {
-      float: right;
-      width: 200px;
-      border-radius: 10px;
-      margin-left: 20px;
-    }
-
-    .details {
-      text-align: left;
-      overflow: hidden;
-    }
-
-    p {
-      margin: 10px 0;
+    .value {
+      flex: 1;
     }
 
     button {
-      padding: 12px 20px;
       margin-top: 30px;
-      background: #00ffc3;
-      color: #000;
+      padding: 12px 20px;
+      background: #e50914;
+      color: #fff;
       border: none;
       font-weight: bold;
       border-radius: 8px;
@@ -70,16 +110,35 @@
     }
 
     button:hover {
-      background-color: #00bfa3;
+      background: #c30d12;
+    }
+
+    @media (max-width: 600px) {
+      .ticket {
+        flex-direction: column;
+      }
+
+      .poster-side, .details-side {
+        width: 100%;
+      }
+
+      .details-side .row {
+        flex-direction: column;
+      }
+
+      .label {
+        width: auto;
+        margin-bottom: 4px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="success-container">
-    <h1>Your Booking is Confirmed!!</h1>
-    <div class="subtext">Enjoy the show and don’t forget the popcorn! 🎬</div>
+  <div class="container">
+    <h1> Your Ticket is Ready</h1>
+    <div class="subtext">Show this at the counter or scan for entry</div>
 
-    <div class="details" id="bookingInfo"></div>
+    <div class="ticket" id="ticketContent"></div>
     <button onclick="logout()">Logout</button>
   </div>
 
@@ -88,28 +147,32 @@
     const movieData = {
       "Gilli": "assets/gilli.jpg",
       "Kaithi": "assets/kaithi.jpg",
-      "KGF Chapter 2": "assets/kgf.jpg",
+      "KGF Chapter 2": "assets/KGF_chapter_2.jpg",
       "Leo": "assets/leo.jpg",
       "Mahaan": "assets/mahaan.jpg",
       "Mersal": "assets/mersal.jpg",
       "Remo": "assets/remo.jpg",
-      "Vada Chennai": "assets/vada-chennai.jpg",
-      "Vikram Vedha": "assets/vikram-vedha.jpg",
+      "Vada Chennai": "assets/vada_chennai.jpg",
+      "Vikram Vedha": "assets/vikram_vedha.jpg",
       "Vikram": "assets/vikram.jpg",
       "Sachein": "assets/sachein.jpg",
       "Shajahan": "assets/shajahan.jpg"
     };
 
     if (data) {
-      document.getElementById("bookingInfo").innerHTML = `
-        <img src="${movieData[data.movie]}" alt="${data.movie}" class="poster" />
-        <p><strong>Name:</strong> ${data.name}</p>
-        <p><strong>Email:</strong> ${data.email}</p>
-        <p><strong>Movie:</strong> ${data.movie}</p>
-        <p><strong>Theater:</strong> ${data.theater}</p>
-        <p><strong>Timing:</strong> ${data.timing}</p>
-        <p><strong>Seats:</strong> ${data.seats.join(", ")}</p>
-        <p><strong>Location:</strong> ${data.location}</p>
+      document.getElementById("ticketContent").innerHTML = `
+        <div class="poster-side">
+          <img src="${movieData[data.movie]}" alt="${data.movie}" />
+        </div>
+        <div class="details-side">
+          <div class="row"><div class="label">Movie:</div><div class="value">${data.movie}</div></div>
+          <div class="row"><div class="label">Name:</div><div class="value">${data.name}</div></div>
+          <div class="row"><div class="label">Email:</div><div class="value">${data.email}</div></div>
+          <div class="row"><div class="label">Theater:</div><div class="value">${data.theater}</div></div>
+          <div class="row"><div class="label">Timing:</div><div class="value">${data.timing}</div></div>
+          <div class="row"><div class="label">Seats:</div><div class="value">${data.seats.join(", ")}</div></div>
+          <div class="row"><div class="label">Location:</div><div class="value">${data.location}</div></div>
+        </div>
       `;
     }
 
@@ -123,11 +186,7 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <script>
     window.onload = () => {
-      confetti({
-        particleCount: 200,
-        spread: 100,
-        origin: { y: 0.6 },
-      });
+      confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
     };
   </script>
 </body>
