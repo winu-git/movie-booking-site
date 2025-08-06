@@ -128,11 +128,17 @@
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
+    #movie-title {
+      color: rgb(255, 94, 0);
+      font-weight: bold;
+      text-shadow: 1px 1px 3px #000;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Book Your Tickets</h1>
+    <center><h1>Book Your Tickets</h1></center>
     <div class="section" id="movie-details"></div>
 
     <div class="section">
@@ -168,7 +174,7 @@
       <input type="text" id="location" placeholder="Location" />
     </div>
 
-    <button onclick="bookNow()">Book Now</button>
+    <center><button onclick="bookNow()">Book Now</button></center>
   </div>
 
   <div id="loader" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;justify-content:center;align-items:center;">
@@ -292,11 +298,11 @@
 
     document.getElementById("movie-details").innerHTML = `
       <img src="${details.poster}" alt="${movie}" style="max-width:200px; float:right; margin-left:20px; border-radius:10px;" />
-      <h2>${movie}</h2>
+      <h2><span id="movie-title">${movie}</span></h2>
       <p><strong>Genre:</strong> ${details.genre}</p>
       <p><strong>Starring:</strong> ${details.starring}</p>
       <p><strong>Duration:</strong> ${details.duration}</p>
-      <p><strong>Rating:</strong> ${details.rating}</p>
+      <p><strong>Rating:</strong> ${convertToStars(details.rating)}</p>
       <p><strong>Description:</strong> ${details.description}</p>
       ${details.trailer ? `<video id="trailerVideo" width="100%" height="315" autoplay loop controls style="margin-top:15px; border-radius:10px;">
         <source src="${details.trailer}" type="video/mp4">
@@ -304,11 +310,21 @@
       </video>` : ''}
     `;
 
+    function convertToStars(ratingStr) {
+      const rating = parseFloat(ratingStr); 
+      const stars = Math.round(rating / 2); 
+      let starDisplay = '';
+      for (let i = 1; i <= 5; i++) {
+        starDisplay += i <= stars ? '★' : '☆';
+      }
+      return `<span style="color: gold; font-size: 20px;">${starDisplay}</span>`;
+    }
+
     const seatContainer = document.getElementById("seat-options");
     seatContainer.innerHTML = `<div class="screen">SCREEN</div><div class="seats" id="seatsGrid"></div>`;
     const grid = document.getElementById("seatsGrid");
 
-    const rows = ['A', 'B', 'C', 'D', 'E',];
+    const rows = ['A', 'B', 'C', 'D', 'E'];
     const seatsPerRow = 8;
 
     rows.forEach(row => {
