@@ -6,31 +6,40 @@
   <style>
     body {
       margin: 0;
-      background-image: url('assets/intro.jpg');
+      background: url('assets/intro.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       padding: 20px;
       box-sizing: border-box;
     }
 
     .login-container {
-      background: rgba(0, 0, 0, 0.85);
-      padding: 40px;
+      background: #000; /* Solid black box */
+      padding: 40px 30px;
       border-radius: 12px;
-      max-width: 400px;
-      width: 100%;
+      width: 90%;
+      max-width: 420px;
       color: #fff;
-      box-sizing: border-box;
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
+      text-align: center;
+    }
+
+    .logo-inside img {
+      width: 160px;             /* Slightly bigger */
+      height: auto;
+      display: block;
+      margin: 0 auto 20px;
+      border-radius: 0;         /* No round corners */
+      box-shadow: none;         /* No glow */
+      background: transparent;
     }
 
     h2 {
-      text-align: center;
-      color: #e50914; 
+      color: #e50914;
       margin-bottom: 25px;
     }
 
@@ -46,7 +55,7 @@
     button {
       width: 100%;
       padding: 12px;
-      background-color: #e50914; 
+      background-color: #e50914;
       border: none;
       border-radius: 8px;
       font-weight: bold;
@@ -55,7 +64,7 @@
     }
 
     button:hover {
-      background-color: #e50914;
+      background-color: #c30d12;
     }
 
     .link {
@@ -64,13 +73,18 @@
     }
 
     .link a {
-      color: #e50914; 
+      color: #e50914;
       text-decoration: none;
     }
   </style>
 </head>
 <body>
   <div class="login-container">
+    <!-- Logo inside the login box -->
+    <div class="logo-inside">
+      <img src="assets/winu-logo.jpg" alt="Winu Logo">
+    </div>
+
     <h2>Login</h2>
     <input type="email" id="loginEmail" placeholder="Email" />
     <input type="password" id="loginPassword" placeholder="Password" />

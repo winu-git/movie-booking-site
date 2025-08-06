@@ -6,34 +6,52 @@
   <style>
     body {
       margin: 0;
-      background-image: url('assets/intro.jpg');
+      background: url('assets/intro.jpg') no-repeat center center fixed;
       background-size: cover;
-      background-position: center;
       font-family: Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       padding: 20px;
       box-sizing: border-box;
     }
-
+    
+    /* Signup Box */
     .signup-container {
-      background: rgba(0, 0, 0, 0.85);
-      padding: 40px;
+      margin-top: 30px;
+      background: #000; /* Solid black background */
+      padding: 40px 30px;
       border-radius: 12px;
-      max-width: 400px;
-      width: 100%;
+      width: 90%;
+      max-width: 420px;
       color: #fff;
-      box-sizing: border-box;
-    }
-
-    h2 {
+      box-shadow: 0 0 20px rgba(0,0,0,0.7);
       text-align: center;
-      color: #e50914; 
+    }
+        
+    /* Logo inside the box */
+    .logo-inside {
+      margin-bottom: 20px;
+    }
+    
+    .logo-inside img {
+      width: 160px;               /* Increased from 120px */
+      height: auto;
+      display: block;
+      margin: 0 auto 20px;
+      border-radius: 0;
+      box-shadow: none;
+      background: transparent;
+    }
+    
+    
+    
+    h2 {
+      color: #e50914;
       margin-bottom: 25px;
     }
-
+    
     input {
       width: 100%;
       padding: 12px;
@@ -42,35 +60,42 @@
       border: none;
       box-sizing: border-box;
     }
-
+    
     button {
       width: 100%;
       padding: 12px;
-      background-color: #e50914; 
+      background-color: #e50914;
       border: none;
       border-radius: 8px;
       font-weight: bold;
       color: #000;
       cursor: pointer;
     }
-
+    
     button:hover {
-      background-color: #e50914; 
+      background-color: #c30d12;
     }
-
+    
     .link {
       margin-top: 15px;
       text-align: center;
     }
-
+    
     .link a {
-      color: #e50914; 
+      color: #e50914;
       text-decoration: none;
     }
+    
+          
   </style>
 </head>
 <body>
   <div class="signup-container">
+    <!-- Logo image inside the box -->
+    <div class="logo-inside">
+      <img src="assets/winu-logo.jpg" alt="Winu Logo">
+    </div>
+
     <h2>Sign Up</h2>
     <input type="text" id="signupName" placeholder="Full Name" />
     <input type="email" id="signupEmail" placeholder="Email" />
@@ -97,4 +122,5 @@
     }
   </script>
 </body>
+
 </html>
